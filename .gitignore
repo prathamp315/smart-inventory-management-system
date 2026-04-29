@@ -1,0 +1,22 @@
+server/node_modules
+server/.env
+
+# IDE and Editor folders
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Node modules (all directories)
+node_modules/
+*/node_modules/
+
+# Environment files
+.env
+.env.local
+.env.*.local
