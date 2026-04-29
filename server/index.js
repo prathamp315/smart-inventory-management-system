@@ -256,3 +256,5 @@ app.get("/api/insights/risk", authMiddleware, getRiskProducts);
 app.listen(PORT, () => {
   console.log(`App is running at http://localhost:${PORT}`);
 });
+
+module.exports = app;
