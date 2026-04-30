@@ -249,20 +249,45 @@ export default function Dashboard({ onNotification }) {
           </Box>
           <Grid container spacing={2}>
             {[
-              { title: "Inventory Turnover", value: kpis.inventoryTurnover, suffix: "x", color: "#4F46E5", icon: <SpeedIcon /> },
-              { title: "Stockout Rate", value: kpis.stockoutRate, suffix: "%", color: "#EF4444", icon: <StockoutIcon /> },
-              { title: "Approval Rate", value: kpis.approvalRate, suffix: "%", color: "#22C55E", icon: <ApprovalIcon /> },
-              { title: "Avg Order Value", value: kpis.averageOrderValue, suffix: "₹", color: "#06B6D4", icon: <AOVIcon /> },
+              { title: "Inventory Turnover", value: kpis.inventoryTurnover, suffix: "x", color: "#4F46E5", icon: <SpeedIcon />, target: 3, desc: "Sales vs Inventory ratio" },
+              { title: "Stockout Rate", value: kpis.stockoutRate, suffix: "%", color: "#EF4444", icon: <StockoutIcon />, target: 100, desc: "Products out of stock", inverse: true },
+              { title: "Approval Rate", value: kpis.approvalRate, suffix: "%", color: "#22C55E", icon: <ApprovalIcon />, target: 100, desc: "Requisition approvals" },
+              { title: "Avg Order Value", value: kpis.averageOrderValue, suffix: "₹", color: "#06B6D4", icon: <AOVIcon />, target: null, desc: "Mean bill amount" },
+              { title: "Return Rate", value: kpis.purchaseReturnRate, suffix: "%", color: "#F59E0B", icon: <WarningIcon />, target: 100, desc: "Purchase returns ratio", inverse: true },
+              { title: "Mfg Completion", value: kpis.manufacturingCompletionRate, suffix: "%", color: "#8B5CF6", icon: <SpeedIcon />, target: 100, desc: "Completed orders" },
+              { title: "Collection Rate", value: kpis.collectionRate, suffix: "%", color: "#10B981", icon: <SalesIcon />, target: 100, desc: "Payment collected vs billed" },
+              { title: "Sync Success", value: kpis.syncSuccessRate, suffix: "%", color: "#6366F1", icon: <RefreshIcon />, target: 100, desc: "Data sync reliability" },
             ].map((k, i) => (
-              <Grid item xs={6} md={3} key={i}>
+              <Grid item xs={6} sm={4} md={3} key={i}>
                 <Card sx={{ border: `1px solid ${theme.palette.divider}`, boxShadow: "none", position: "relative", overflow: "visible", "&:hover": { boxShadow: `0 8px 24px ${alpha(k.color, 0.15)}`, transform: "translateY(-2px)" }, transition: "all 0.2s ease", borderRadius: 3 }}>
                   <Box sx={{ position: "absolute", top: 0, left: 0, right: 0, height: 3, background: k.color, borderRadius: "12px 12px 0 0" }} />
                   <CardContent sx={{ p: 2.5 }}>
-                    <Box sx={{ p: 1, borderRadius: 2, bgcolor: alpha(k.color, 0.1), display: "inline-flex", mb: 1 }}>{React.cloneElement(k.icon, { sx: { fontSize: "1.25rem", color: k.color } })}</Box>
+                    <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", mb: 1 }}>
+                      <Box sx={{ p: 1, borderRadius: 2, bgcolor: alpha(k.color, 0.1), display: "inline-flex" }}>{React.cloneElement(k.icon, { sx: { fontSize: "1.25rem", color: k.color } })}</Box>
+                      {k.target && (
+                        <Chip
+                          size="small"
+                          label={k.inverse ? (k.value <= 10 ? "Good" : "High") : (k.value >= k.target * 0.7 ? "Good" : "Low")}
+                          sx={{
+                            fontSize: "0.65rem", height: 20, fontWeight: 600,
+                            bgcolor: alpha(k.inverse ? (k.value <= 10 ? "#22C55E" : "#EF4444") : (k.value >= k.target * 0.7 ? "#22C55E" : "#F59E0B"), 0.1),
+                            color: k.inverse ? (k.value <= 10 ? "#22C55E" : "#EF4444") : (k.value >= k.target * 0.7 ? "#22C55E" : "#F59E0B"),
+                          }}
+                        />
+                      )}
+                    </Box>
                     <Typography variant="h4" sx={{ fontWeight: 800, fontSize: "1.5rem" }}>
                       {k.suffix === "₹" ? `₹${Number(k.value).toLocaleString()}` : k.value}{k.suffix && k.suffix !== "₹" ? k.suffix : ""}
                     </Typography>
                     <Typography variant="body2" color="text.secondary" sx={{ fontSize: "0.75rem", fontWeight: 500 }}>{k.title}</Typography>
+                    {k.target && (
+                      <LinearProgress
+                        variant="determinate"
+                        value={Math.min(k.inverse ? Math.max(0, 100 - k.value) : (k.value / k.target) * 100, 100)}
+                        sx={{ mt: 1, height: 4, borderRadius: 2, bgcolor: alpha(k.color, 0.1), "& .MuiLinearProgress-bar": { bgcolor: k.color, borderRadius: 2 } }}
+                      />
+                    )}
+                    <Typography variant="caption" color="text.disabled" sx={{ fontSize: "0.65rem", mt: 0.5, display: "block" }}>{k.desc}</Typography>
                   </CardContent>
                 </Card>
               </Grid>
