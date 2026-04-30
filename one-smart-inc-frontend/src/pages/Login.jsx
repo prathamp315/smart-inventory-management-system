@@ -4,7 +4,7 @@ import { Box, Card, CardContent, TextField, Button, Typography, Alert, Avatar, I
 import { Store as StoreIcon, Visibility, VisibilityOff, Email as EmailIcon, Lock as LockIcon } from "@mui/icons-material";
 import axios from "axios";
 
-const API_BASE_URL = "http://localhost:8000/api";
+const API_BASE_URL = "https://smart-erp-backend.vercel.app/api";
 
 const Login = () => {
   const navigate = useNavigate();
