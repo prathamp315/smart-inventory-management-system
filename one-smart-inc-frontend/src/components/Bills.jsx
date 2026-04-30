@@ -234,7 +234,7 @@ const Bills = ({ onNotification }) => {
 
   return (
     <Box>
-      <Card sx={{ mb: 4, boxShadow: 'none', border: '1px solid #e0e0e0' }}>
+      <Card sx={{ mb: 4, boxShadow: 'none', border: 1, borderColor: 'divider' }}>
         <CardContent sx={{
           display: 'flex',
           justifyContent: 'space-between',
@@ -269,10 +269,11 @@ const Bills = ({ onNotification }) => {
 
       <Paper sx={{
         overflow: 'hidden',
-        backgroundColor: 'white',
+        bgcolor: 'background.paper',
         boxShadow: 'none',
-        border: '1px solid #e0e0e0',
-        borderRadius: 3,
+        border: 1,
+        borderColor: 'divider',
+        borderRadius: 1,
       }}>
         <TableContainer>
           <Table sx={{ minWidth: 750 }}>
@@ -389,7 +390,7 @@ const Bills = ({ onNotification }) => {
         PaperProps={{
           sx: {
             boxShadow: 'none',
-            border: '1px solid #e0e0e0'
+            border: 1, borderColor: 'divider'
           }
         }}
       >

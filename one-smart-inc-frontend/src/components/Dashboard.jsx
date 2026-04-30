@@ -179,17 +179,7 @@ export default function Dashboard({ onNotification }) {
         </Box>
         <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap", alignItems: "center" }}>
           <Button variant="outlined" size="small" startIcon={<SimulateIcon />} onClick={() => setSimOpen(true)}
-            sx={{ borderRadius: 2, textTransform: "none", fontWeight: 600 }}>Simulate</Button>
-          {!demoActive ? (
-            <Button variant="contained" size="small" startIcon={demoLoading ? null : <PlayCircle />}
-              onClick={startDemo} disabled={demoLoading}
-              sx={{ borderRadius: 2, textTransform: "none", fontWeight: 600, background: "linear-gradient(135deg, #4F46E5, #7C3AED)", "&:hover": { background: "linear-gradient(135deg, #4338CA, #6D28D9)" } }}>
-              {demoLoading ? "Loading..." : "🎬 Demo Mode"}
-            </Button>
-          ) : (
-            <Button variant="outlined" size="small" startIcon={<RestartAlt />} onClick={endDemo} color="secondary"
-              sx={{ borderRadius: 2, textTransform: "none", fontWeight: 600 }}>End Demo</Button>
-          )}
+            sx={{ borderRadius: 1, textTransform: "none", fontWeight: 600 }}>Simulate</Button>
           <Tooltip title="Refresh"><IconButton onClick={fetchData} color="primary" size="small"><RefreshIcon /></IconButton></Tooltip>
         </Box>
       </Box>
@@ -273,10 +263,10 @@ export default function Dashboard({ onNotification }) {
       {/* ═══════════════════════════════════════════ */}
       {/*  SECTION 3: CHARTS                         */}
       {/* ═══════════════════════════════════════════ */}
-      <Grid container spacing={2.5} sx={{ mb: 3 }} id="section-charts">
+      <Grid container spacing={2} sx={{ mb: 3 }} id="section-charts">
         <Grid item xs={12} md={8}>
           <Paper sx={{
-            p: 2.5, border: `1px solid ${theme.palette.divider}`, boxShadow: "none", borderRadius: 3, height: "100%",
+            p: 2.5, border: `1px solid ${theme.palette.divider}`, boxShadow: "none", borderRadius: 1,
             ...(demoActive && demoStep === 1 ? { border: "2px solid #4F46E5", boxShadow: `0 0 0 3px ${alpha("#4F46E5", 0.15)}` } : {}),
           }}>
             <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2 }}>
@@ -284,34 +274,38 @@ export default function Dashboard({ onNotification }) {
               <Chip label="Last 7 days" size="small" sx={{ height: 22, fontSize: "0.65rem", fontWeight: 600 }} />
             </Box>
             {revenueData.length > 0 ? (
-              <ResponsiveContainer width="100%" height={260}>
-                <BarChart data={revenueData} barCategoryGap="25%">
-                  <CartesianGrid strokeDasharray="3 3" stroke={alpha(theme.palette.text.primary, 0.06)} vertical={false} />
-                  <XAxis dataKey="date" tick={{ fontSize: 11 }} axisLine={false} tickLine={false} />
-                  <YAxis tick={{ fontSize: 11 }} axisLine={false} tickLine={false} />
-                  <RTooltip contentStyle={{ borderRadius: 12, border: `1px solid ${theme.palette.divider}`, boxShadow: "0 4px 12px rgba(0,0,0,0.08)" }} />
-                  <Bar dataKey="revenue" fill="#4F46E5" radius={[6, 6, 0, 0]} />
-                </BarChart>
-              </ResponsiveContainer>
-            ) : <Box sx={{ py: 8, textAlign: "center" }}><Typography color="text.secondary">No revenue data yet. Click Demo Mode to load sample data.</Typography></Box>}
+              <Box sx={{ width: "100%", height: 280, minHeight: 200 }}>
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={revenueData} barCategoryGap="25%" margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke={alpha(theme.palette.text.primary, 0.06)} vertical={false} />
+                    <XAxis dataKey="date" tick={{ fontSize: 10, fill: theme.palette.text.secondary }} axisLine={false} tickLine={false} />
+                    <YAxis tick={{ fontSize: 10, fill: theme.palette.text.secondary }} axisLine={false} tickLine={false} width={50} />
+                    <RTooltip contentStyle={{ borderRadius: 4, border: `1px solid ${theme.palette.divider}`, backgroundColor: theme.palette.background.paper, color: theme.palette.text.primary, fontSize: 12 }} />
+                    <Bar dataKey="revenue" fill="#818CF8" radius={[4, 4, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </Box>
+            ) : <Box sx={{ py: 8, textAlign: "center" }}><Typography color="text.secondary">No revenue data available</Typography></Box>}
           </Paper>
         </Grid>
         <Grid item xs={12} md={4}>
           <Paper sx={{
-            p: 2.5, border: `1px solid ${theme.palette.divider}`, boxShadow: "none", borderRadius: 3, height: "100%",
+            p: 2.5, border: `1px solid ${theme.palette.divider}`, boxShadow: "none", borderRadius: 1, height: "100%",
             ...(demoActive && demoStep === 1 ? { border: "2px solid #4F46E5", boxShadow: `0 0 0 3px ${alpha("#4F46E5", 0.15)}` } : {}),
           }}>
             <Typography variant="h6" fontWeight={700} sx={{ mb: 2 }}>Payment Breakdown</Typography>
             {paymentData.length > 0 ? (
-              <ResponsiveContainer width="100%" height={260}>
-                <PieChart>
-                  <Pie data={paymentData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={85} innerRadius={52} paddingAngle={3}
-                    label={({ name, percent }) => `${name} ${(percent*100).toFixed(0)}%`} labelLine={false}>
-                    {paymentData.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
-                  </Pie>
-                  <RTooltip />
-                </PieChart>
-              </ResponsiveContainer>
+              <Box sx={{ width: "100%", height: 280, minHeight: 200 }}>
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
+                    <Pie data={paymentData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={75} innerRadius={45} paddingAngle={3}>
+                      {paymentData.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
+                    </Pie>
+                    <RTooltip contentStyle={{ borderRadius: 4, border: `1px solid ${theme.palette.divider}`, backgroundColor: theme.palette.background.paper, color: theme.palette.text.primary, fontSize: 12 }} />
+                    <Legend iconSize={8} wrapperStyle={{ fontSize: 11 }} />
+                  </PieChart>
+                </ResponsiveContainer>
+              </Box>
             ) : <Box sx={{ py: 8, textAlign: "center" }}><Typography color="text.secondary">No payment data</Typography></Box>}
           </Paper>
         </Grid>

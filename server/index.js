@@ -69,12 +69,36 @@ const {
 } = require("./controllers/intelligenceController");
 const authMiddleware = require("./middleware/authMiddleware");
 const authorizeRoles = require("./middleware/roleMiddleware");
+const bcrypt = require("bcryptjs");
+const { User } = require("./models/models");
 require("dotenv").config();
 const PORT = process.env.PORT || 5000;
 
-connectToMongoDB(process.env.MONGO_URI).then(() => {
+// Auto-seed RBAC users on startup
+const autoSeedUsers = async () => {
+  const users = [
+    { name: "Admin User", email: "admin@onesmart.com", password: "admin123", role: "Admin" },
+    { name: "Inventory Manager", email: "inventory@onesmart.com", password: "inventory123", role: "InventoryManager" },
+    { name: "Procurement Manager", email: "procurement@onesmart.com", password: "procurement123", role: "ProcurementManager" },
+    { name: "Production Manager", email: "production@onesmart.com", password: "production123", role: "ProductionManager" },
+    { name: "Sales Executive", email: "sales@onesmart.com", password: "sales123", role: "SalesExecutive" },
+  ];
+  try {
+    for (const u of users) {
+      const exists = await User.findOne({ email: u.email });
+      if (!exists) {
+        const hashed = await bcrypt.hash(u.password, 10);
+        await User.create({ name: u.name, email: u.email, password: hashed, role: u.role });
+        console.log(`Auto-seed: Created user ${u.email} (${u.role})`);
+      }
+    }
+  } catch (e) { console.error("Auto-seed users error:", e.message); }
+};
+
+connectToMongoDB(process.env.MONGO_URI).then(async () => {
   console.log("Connected to Database");
-  // Auto-seed demo data on startup
+  // Auto-seed users and demo data on startup
+  await autoSeedUsers();
   autoSeedData();
   autoSeedDecision();
 });

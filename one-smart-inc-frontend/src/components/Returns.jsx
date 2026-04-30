@@ -182,7 +182,7 @@ const Returns = ({ onNotification }) => {
         </Typography>
       </Alert>
 
-      <Card sx={{ mb: 4, boxShadow: 'none', border: '1px solid #e0e0e0' }}>
+      <Card sx={{ mb: 4, boxShadow: 'none', border: 1, borderColor: 'divider' }}>
         <CardContent sx={{
           display: 'flex',
           justifyContent: 'space-between',
@@ -205,9 +205,10 @@ const Returns = ({ onNotification }) => {
 
       <Paper sx={{
         overflow: 'hidden',
-        backgroundColor: 'white',
+        backgroundColor: 'background.paper',
         boxShadow: 'none',
-        border: '1px solid #e0e0e0',
+        border: 1,
+        borderColor: 'divider',
         borderRadius: 3,
       }}>
         <TableContainer>
@@ -322,7 +323,7 @@ const Returns = ({ onNotification }) => {
           sx: {
             borderRadius: 3,
             boxShadow: 'none',
-            border: '1px solid #e0e0e0'
+            border: 1, borderColor: 'divider'
           }
         }}
       >
@@ -346,7 +347,7 @@ const Returns = ({ onNotification }) => {
                   mb: 4,
                   bgcolor: 'grey.50',
                   borderRadius: 3,
-                  border: '1px solid #e0e0e0',
+                  border: 1, borderColor: 'divider',
                   boxShadow: 'none',
                 }}
               >
