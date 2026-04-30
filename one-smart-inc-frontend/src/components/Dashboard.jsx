@@ -274,7 +274,7 @@ export default function Dashboard({ onNotification }) {
               <Chip label="Last 7 days" size="small" sx={{ height: 22, fontSize: "0.65rem", fontWeight: 600 }} />
             </Box>
             {revenueData.length > 0 ? (
-              <Box sx={{ width: "100%", height: 280, minHeight: 200 }}>
+              <Box sx={{ width: "100%", height: 240 }}>
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={revenueData} barCategoryGap="25%" margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke={alpha(theme.palette.text.primary, 0.06)} vertical={false} />
@@ -290,19 +290,19 @@ export default function Dashboard({ onNotification }) {
         </Grid>
         <Grid item xs={12} md={4}>
           <Paper sx={{
-            p: 2.5, border: `1px solid ${theme.palette.divider}`, boxShadow: "none", borderRadius: 1, height: "100%",
+            p: 2.5, border: `1px solid ${theme.palette.divider}`, boxShadow: "none", borderRadius: 1,
             ...(demoActive && demoStep === 1 ? { border: "2px solid #4F46E5", boxShadow: `0 0 0 3px ${alpha("#4F46E5", 0.15)}` } : {}),
           }}>
-            <Typography variant="h6" fontWeight={700} sx={{ mb: 2 }}>Payment Breakdown</Typography>
+            <Typography variant="h6" fontWeight={700} sx={{ mb: 1 }}>Payment Breakdown</Typography>
             {paymentData.length > 0 ? (
-              <Box sx={{ width: "100%", height: 280, minHeight: 200 }}>
+              <Box sx={{ width: "100%", height: 220 }}>
                 <ResponsiveContainer width="100%" height="100%">
-                  <PieChart margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
-                    <Pie data={paymentData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={75} innerRadius={45} paddingAngle={3}>
+                  <PieChart margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
+                    <Pie data={paymentData} dataKey="value" nameKey="name" cx="50%" cy="45%" outerRadius="70%" innerRadius="42%" paddingAngle={3}>
                       {paymentData.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
                     </Pie>
                     <RTooltip contentStyle={{ borderRadius: 4, border: `1px solid ${theme.palette.divider}`, backgroundColor: theme.palette.background.paper, color: theme.palette.text.primary, fontSize: 12 }} />
-                    <Legend iconSize={8} wrapperStyle={{ fontSize: 11 }} />
+                    <Legend iconSize={8} wrapperStyle={{ fontSize: 11, paddingTop: 4 }} />
                   </PieChart>
                 </ResponsiveContainer>
               </Box>
