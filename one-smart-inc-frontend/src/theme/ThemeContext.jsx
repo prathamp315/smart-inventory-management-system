@@ -13,7 +13,7 @@ export const useThemeMode = () => useContext(ThemeContext);
 export const ThemeProvider = ({ children }) => {
   const [mode, setMode] = useState(() => {
     const stored = localStorage.getItem('themeMode');
-    return stored === 'dark' ? 'dark' : 'light';
+    return stored === 'light' ? 'light' : 'dark';
   });
 
   const toggleTheme = () => {

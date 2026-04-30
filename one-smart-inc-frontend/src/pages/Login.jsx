@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Box, Card, CardContent, TextField, Button, Typography, Alert, Avatar, InputAdornment, IconButton, alpha } from "@mui/material";
-import { Store as StoreIcon, Visibility, VisibilityOff, Email as EmailIcon, Lock as LockIcon } from "@mui/icons-material";
+import { Box, Card, CardContent, TextField, Button, Typography, Alert, InputAdornment, IconButton, alpha } from "@mui/material";
+import { Visibility, VisibilityOff, Email as EmailIcon, Lock as LockIcon } from "@mui/icons-material";
 import axios from "axios";
 
 const API_BASE_URL = "https://smart-erp-backend.vercel.app/api";
@@ -37,50 +37,79 @@ const Login = () => {
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      background: "linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #0F172A 100%)",
+      bgcolor: "#111317",
       position: "relative",
-      overflow: "hidden",
     }}>
-      {/* Decorative elements */}
-      <Box sx={{ position: 'absolute', width: 500, height: 500, borderRadius: '50%', background: 'radial-gradient(circle, rgba(79,70,229,0.15) 0%, transparent 70%)', top: '-10%', right: '-5%' }} />
-      <Box sx={{ position: 'absolute', width: 400, height: 400, borderRadius: '50%', background: 'radial-gradient(circle, rgba(34,197,94,0.1) 0%, transparent 70%)', bottom: '-5%', left: '-5%' }} />
+      {/* Subtle radial glow */}
+      <Box sx={{ position: 'absolute', width: 600, height: 600, borderRadius: '50%', background: 'radial-gradient(circle, rgba(192,192,192,0.04) 0%, transparent 70%)', top: '10%', right: '15%', pointerEvents: 'none' }} />
 
       <Card sx={{
         width: "100%",
-        maxWidth: 420,
-        borderRadius: 4,
-        border: '1px solid rgba(255,255,255,0.08)',
-        bgcolor: alpha('#1E293B', 0.8),
-        backdropFilter: 'blur(20px)',
-        boxShadow: '0 25px 60px rgba(0,0,0,0.5)',
+        maxWidth: 400,
+        borderRadius: '4px',
+        border: '1px solid rgba(192,192,192,0.1)',
+        bgcolor: '#1a1c20',
+        boxShadow: 'none',
       }}>
-        <CardContent sx={{ p: 4.5 }}>
-          <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", mb: 4 }}>
-            <Avatar sx={{
-              width: 56, height: 56, mb: 2,
-              background: "linear-gradient(135deg, #4F46E5, #7C3AED)",
-              boxShadow: "0 8px 24px rgba(79,70,229,0.4)",
-            }}>
-              <StoreIcon fontSize="large" />
-            </Avatar>
-            <Typography variant="h5" sx={{ fontWeight: 800, color: '#F1F5F9', letterSpacing: '-0.02em' }}>One Smart Inc</Typography>
-            <Typography variant="body2" sx={{ color: '#94A3B8', mt: 0.5 }}>Smart Inventory Management System</Typography>
+        <CardContent sx={{ p: 4 }}>
+          {/* Brand */}
+          <Box sx={{ mb: 4 }}>
+            <Typography variant="overline" sx={{ color: '#94a3b8', letterSpacing: '0.12em', fontSize: '0.625rem' }}>Enterprise ERP</Typography>
+            <Typography variant="h4" sx={{ fontWeight: 800, color: '#F1F5F9', mt: 0.5, letterSpacing: '-0.02em' }}>One Smart Inc</Typography>
+            <Typography variant="body2" sx={{ color: '#64748B', mt: 0.5 }}>Sign in to your account</Typography>
           </Box>
 
-          {error && <Alert severity="error" sx={{ mb: 2.5, borderRadius: 2.5, bgcolor: alpha('#EF4444', 0.1), color: '#FCA5A5', border: `1px solid ${alpha('#EF4444', 0.2)}`, '& .MuiAlert-icon': { color: '#F87171' } }}>{error}</Alert>}
+          {error && (
+            <Alert severity="error" sx={{
+              mb: 2.5, borderRadius: '4px',
+              bgcolor: alpha('#EF4444', 0.08), color: '#FCA5A5',
+              border: '1px solid rgba(239,68,68,0.15)',
+              '& .MuiAlert-icon': { color: '#F87171' },
+            }}>{error}</Alert>
+          )}
 
           <Box component="form" onSubmit={handleLogin}>
-            <TextField fullWidth label="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required
-              sx={{ mb: 2.5, '& .MuiOutlinedInput-root': { bgcolor: alpha('#FFFFFF', 0.04), '& fieldset': { borderColor: 'rgba(255,255,255,0.1)' }, '&:hover fieldset': { borderColor: 'rgba(255,255,255,0.2)' }, '&.Mui-focused fieldset': { borderColor: '#4F46E5' } }, '& .MuiInputLabel-root': { color: '#94A3B8' }, '& input': { color: '#F1F5F9' } }}
-              InputProps={{ startAdornment: <InputAdornment position="start"><EmailIcon sx={{ color: '#64748B' }} /></InputAdornment> }} />
-            <TextField fullWidth label="Password" type={showPassword ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)} required
-              sx={{ mb: 3.5, '& .MuiOutlinedInput-root': { bgcolor: alpha('#FFFFFF', 0.04), '& fieldset': { borderColor: 'rgba(255,255,255,0.1)' }, '&:hover fieldset': { borderColor: 'rgba(255,255,255,0.2)' }, '&.Mui-focused fieldset': { borderColor: '#4F46E5' } }, '& .MuiInputLabel-root': { color: '#94A3B8' }, '& input': { color: '#F1F5F9' } }}
+            <TextField
+              fullWidth label="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required
+              sx={{
+                mb: 2,
+                '& .MuiOutlinedInput-root': {
+                  bgcolor: 'rgba(192,192,192,0.03)',
+                  '& fieldset': { borderColor: 'rgba(192,192,192,0.1)', borderWidth: 1 },
+                  '&:hover fieldset': { borderColor: 'rgba(192,192,192,0.2)' },
+                  '&.Mui-focused fieldset': { borderColor: '#C0C0C0', borderWidth: 1 },
+                },
+                '& .MuiInputLabel-root': { color: '#64748B' },
+                '& input': { color: '#F1F5F9' },
+              }}
+              InputProps={{ startAdornment: <InputAdornment position="start"><EmailIcon sx={{ color: '#475569', fontSize: '1.1rem' }} /></InputAdornment> }}
+            />
+            <TextField
+              fullWidth label="Password" type={showPassword ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)} required
+              sx={{
+                mb: 3,
+                '& .MuiOutlinedInput-root': {
+                  bgcolor: 'rgba(192,192,192,0.03)',
+                  '& fieldset': { borderColor: 'rgba(192,192,192,0.1)', borderWidth: 1 },
+                  '&:hover fieldset': { borderColor: 'rgba(192,192,192,0.2)' },
+                  '&.Mui-focused fieldset': { borderColor: '#C0C0C0', borderWidth: 1 },
+                },
+                '& .MuiInputLabel-root': { color: '#64748B' },
+                '& input': { color: '#F1F5F9' },
+              }}
               InputProps={{
-                startAdornment: <InputAdornment position="start"><LockIcon sx={{ color: '#64748B' }} /></InputAdornment>,
-                endAdornment: <InputAdornment position="end"><IconButton onClick={() => setShowPassword(!showPassword)} edge="end" sx={{ color: '#64748B' }}>{showPassword ? <VisibilityOff /> : <Visibility />}</IconButton></InputAdornment>
-              }} />
+                startAdornment: <InputAdornment position="start"><LockIcon sx={{ color: '#475569', fontSize: '1.1rem' }} /></InputAdornment>,
+                endAdornment: <InputAdornment position="end"><IconButton onClick={() => setShowPassword(!showPassword)} edge="end" sx={{ color: '#475569' }}>{showPassword ? <VisibilityOff fontSize="small" /> : <Visibility fontSize="small" />}</IconButton></InputAdornment>,
+              }}
+            />
             <Button type="submit" variant="contained" fullWidth size="large" disabled={loading}
-              sx={{ py: 1.5, fontSize: '0.9375rem', fontWeight: 600, borderRadius: 2.5, background: 'linear-gradient(135deg, #4F46E5, #7C3AED)', boxShadow: '0 4px 16px rgba(79,70,229,0.4)', '&:hover': { background: 'linear-gradient(135deg, #4338CA, #6D28D9)', boxShadow: '0 6px 20px rgba(79,70,229,0.5)', transform: 'translateY(-1px)' }, '&:disabled': { background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.3)' } }}>
+              sx={{
+                py: 1.25, fontWeight: 700, borderRadius: '4px', fontSize: '0.8125rem',
+                bgcolor: '#C0C0C0', color: '#111317', letterSpacing: '0.02em',
+                '&:hover': { bgcolor: '#D4D4D8', transform: 'translateY(-1px)' },
+                '&:disabled': { bgcolor: 'rgba(192,192,192,0.15)', color: 'rgba(255,255,255,0.2)' },
+                transition: 'all 200ms ease',
+              }}>
               {loading ? "Signing in..." : "Sign In"}
             </Button>
           </Box>
