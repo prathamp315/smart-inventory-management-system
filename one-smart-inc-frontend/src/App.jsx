@@ -229,61 +229,42 @@ function AppLayout() {
       display: 'flex',
       flexDirection: 'column',
       height: '100%',
-      background: mode === 'dark'
-        ? 'linear-gradient(180deg, #1E293B 0%, #0F172A 100%)'
-        : 'linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%)',
+      bgcolor: mode === 'dark' ? '#111317' : '#FFFFFF',
     }}>
-      {/* Logo */}
-      <Box sx={{
-        p: 2.5,
-        display: 'flex',
-        alignItems: 'center',
-        gap: 1.5,
-      }}>
-        <Avatar
-          sx={{
-            width: 38,
-            height: 38,
-            background: 'linear-gradient(135deg, #4F46E5, #7C3AED)',
-            boxShadow: '0 4px 12px rgba(79, 70, 229, 0.3)',
-            fontSize: '1rem',
-          }}
-        >
-          <StoreIcon fontSize="small" />
-        </Avatar>
-        <Box>
-          <Typography variant="subtitle1" sx={{ fontWeight: 700, lineHeight: 1.1, fontSize: '0.9375rem' }}>
-            One Smart Inc
-          </Typography>
-          <Typography variant="caption" sx={{ color: 'text.secondary', fontSize: '0.6875rem' }}>
-            ERP Dashboard
-          </Typography>
+      {/* Brand */}
+      <Box sx={{ px: 2.5, pt: 2.5, pb: 1.5 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+          <Box sx={{
+            width: 32, height: 32, borderRadius: '4px',
+            bgcolor: mode === 'dark' ? 'rgba(192,192,192,0.08)' : alpha(theme.palette.primary.main, 0.08),
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+          }}>
+            <StoreIcon sx={{ fontSize: '1.1rem', color: mode === 'dark' ? '#C0C0C0' : theme.palette.primary.main }} />
+          </Box>
+          <Box>
+            <Typography sx={{ fontWeight: 800, fontSize: '0.875rem', lineHeight: 1.1, color: mode === 'dark' ? '#F1F5F9' : 'text.primary', letterSpacing: '-0.01em' }}>
+              Antigravity
+            </Typography>
+            <Typography sx={{ fontSize: '0.5625rem', fontWeight: 600, color: mode === 'dark' ? '#475569' : 'text.secondary', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+              Enterprise ERP
+            </Typography>
+          </Box>
         </Box>
       </Box>
 
       <Divider sx={{ mx: 2, opacity: 0.6 }} />
 
-      {/* User Info */}
-      <Box sx={{ px: 2.5, py: 1.5 }}>
-        <Typography variant="body2" sx={{ fontWeight: 600, fontSize: '0.8125rem' }}>
+      {/* User */}
+      <Box sx={{ px: 2.5, py: 1.25 }}>
+        <Typography sx={{ fontWeight: 600, fontSize: '0.75rem', color: mode === 'dark' ? '#94a3b8' : 'text.secondary' }}>
           {user?.name || "User"}
         </Typography>
-        <Chip
-          label={roleLabels[userRole] || userRole}
-          size="small"
-          sx={{
-            mt: 0.5,
-            height: 22,
-            fontSize: '0.625rem',
-            fontWeight: 600,
-            background: alpha(theme.palette.primary.main, 0.1),
-            color: theme.palette.primary.main,
-            border: 'none',
-          }}
-        />
+        <Typography sx={{ fontSize: '0.5625rem', fontWeight: 600, color: mode === 'dark' ? '#475569' : 'text.disabled', letterSpacing: '0.06em' }}>
+          {roleLabels[userRole] || userRole}
+        </Typography>
       </Box>
 
-      <Divider sx={{ mx: 2, opacity: 0.6 }} />
+      <Divider sx={{ mx: 2, borderColor: mode === 'dark' ? 'rgba(192,192,192,0.06)' : 'rgba(0,0,0,0.06)' }} />
 
       {/* Navigation */}
       <Box sx={{ flex: 1, overflow: 'auto', px: 1.5, py: 1 }}>
@@ -311,28 +292,22 @@ function AppLayout() {
                     <ListItemButton
                       onClick={() => handleNavigation(item.path)}
                       sx={{
-                        borderRadius: 2,
-                        py: 0.875,
+                        borderRadius: '4px',
+                        py: 0.75,
                         px: 1.5,
-                        minHeight: 40,
+                        minHeight: 36,
                         ...(isActive ? {
-                          background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${alpha(theme.palette.primary.dark, 0.9)})`,
-                          color: '#fff',
-                          boxShadow: `0 4px 12px ${alpha(theme.palette.primary.main, 0.35)}`,
-                          '&:hover': {
-                            background: `linear-gradient(135deg, ${theme.palette.primary.dark}, ${theme.palette.primary.main})`,
-                          },
+                          bgcolor: mode === 'dark' ? 'rgba(192,192,192,0.08)' : alpha(theme.palette.primary.main, 0.08),
+                          '&:hover': { bgcolor: mode === 'dark' ? 'rgba(192,192,192,0.12)' : alpha(theme.palette.primary.main, 0.12) },
                         } : {
-                          '&:hover': {
-                            backgroundColor: alpha(theme.palette.primary.main, 0.06),
-                          },
+                          '&:hover': { bgcolor: mode === 'dark' ? 'rgba(192,192,192,0.04)' : 'rgba(0,0,0,0.03)' },
                         }),
                       }}
                     >
                       <ListItemIcon sx={{
-                        color: isActive ? '#fff' : 'text.secondary',
-                        minWidth: 36,
-                        '& .MuiSvgIcon-root': { fontSize: '1.2rem' },
+                        color: isActive ? (mode === 'dark' ? '#C0C0C0' : theme.palette.primary.main) : (mode === 'dark' ? '#475569' : 'text.secondary'),
+                        minWidth: 32,
+                        '& .MuiSvgIcon-root': { fontSize: '1.05rem' },
                       }}>
                         {item.text === 'Dashboard' && expiringCount > 0 ? (
                           <Badge badgeContent={expiringCount} color="error" overlap="circular">
@@ -343,8 +318,9 @@ function AppLayout() {
                       <ListItemText
                         primary={item.text}
                         primaryTypographyProps={{
-                          fontSize: '0.8125rem',
+                          fontSize: '0.75rem',
                           fontWeight: isActive ? 600 : 400,
+                          color: isActive ? (mode === 'dark' ? '#F1F5F9' : 'text.primary') : (mode === 'dark' ? '#94a3b8' : 'text.secondary'),
                         }}
                       />
                     </ListItemButton>
@@ -357,19 +333,20 @@ function AppLayout() {
       </Box>
 
       {/* Logout */}
-      <Box sx={{ p: 2 }}>
+      <Box sx={{ p: 1.5 }}>
         <Button
           fullWidth
           variant="outlined"
-          color="error"
-          startIcon={<LogoutIcon />}
+          startIcon={<LogoutIcon sx={{ fontSize: '0.9rem !important' }} />}
           onClick={handleLogout}
           sx={{
-            borderRadius: 2,
-            py: 1,
-            fontSize: '0.8125rem',
-            borderWidth: '1.5px',
-            '&:hover': { borderWidth: '1.5px' },
+            borderRadius: '4px',
+            py: 0.75,
+            fontSize: '0.75rem',
+            fontWeight: 600,
+            borderColor: mode === 'dark' ? 'rgba(192,192,192,0.1)' : 'rgba(0,0,0,0.12)',
+            color: mode === 'dark' ? '#94a3b8' : 'text.secondary',
+            '&:hover': { borderColor: mode === 'dark' ? 'rgba(192,192,192,0.2)' : 'rgba(0,0,0,0.2)', bgcolor: mode === 'dark' ? 'rgba(192,192,192,0.04)' : 'rgba(0,0,0,0.02)' },
           }}
         >
           Sign Out
@@ -437,13 +414,14 @@ function AppLayout() {
         <AppBar
           position="sticky"
           sx={{
-            backgroundColor: alpha(theme.palette.background.paper, 0.8),
-            backdropFilter: 'blur(12px)',
-            borderBottom: `1px solid ${theme.palette.divider}`,
+            backgroundColor: mode === 'dark' ? 'rgba(17,19,23,0.9)' : 'rgba(255,255,255,0.9)',
+            backdropFilter: 'blur(20px)',
+            borderBottom: `1px solid ${mode === 'dark' ? 'rgba(192,192,192,0.06)' : theme.palette.divider}`,
             color: 'text.primary',
+            boxShadow: 'none',
           }}
         >
-          <Toolbar sx={{ gap: 1.5, minHeight: '64px !important', px: { xs: 2, sm: 3 } }}>
+          <Toolbar sx={{ gap: 1.5, minHeight: '52px !important', px: { xs: 2, sm: 3 } }}>
             {/* Mobile menu button */}
             <IconButton
               color="inherit"
