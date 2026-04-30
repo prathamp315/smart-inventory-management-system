@@ -54,7 +54,7 @@ const Login = () => {
         <CardContent sx={{ p: 4 }}>
           {/* Brand */}
           <Box sx={{ mb: 4 }}>
-            <Typography variant="overline" sx={{ color: '#94a3b8', letterSpacing: '0.12em', fontSize: '0.625rem' }}>Enterprise ERP</Typography>
+            <Typography variant="overline" sx={{ color: '#94a3b8', letterSpacing: '0.12em', fontSize: '0.625rem' }}>Smart ERP System</Typography>
             <Typography variant="h4" sx={{ fontWeight: 800, color: '#F1F5F9', mt: 0.5, letterSpacing: '-0.02em' }}>One Smart Inc</Typography>
             <Typography variant="body2" sx={{ color: '#64748B', mt: 0.5 }}>Sign in to your account</Typography>
           </Box>

@@ -243,10 +243,10 @@ function AppLayout() {
           </Box>
           <Box>
             <Typography sx={{ fontWeight: 800, fontSize: '0.875rem', lineHeight: 1.1, color: mode === 'dark' ? '#F1F5F9' : 'text.primary', letterSpacing: '-0.01em' }}>
-              Antigravity
+              One Smart Inc
             </Typography>
             <Typography sx={{ fontSize: '0.5625rem', fontWeight: 600, color: mode === 'dark' ? '#475569' : 'text.secondary', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-              Enterprise ERP
+              Smart ERP System
             </Typography>
           </Box>
         </Box>
